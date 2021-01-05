@@ -93,8 +93,10 @@ func promptRemove(db *gorm.DB) {
 	var res []Documentation
 	db.Find(&res)
 	displayRes := make([]string, 0, len(res))
-	for _, r := range res {
+	resDict := make(map[int]uint)
+	for i, r := range res {
 		displayRes = append(displayRes, r.Command+" - "+r.Title+" - "+r.Definition)
+		resDict[i] = r.ID
 	}
 	prompt := promptui.Select{
 		Label: "Select Day",
@@ -107,7 +109,8 @@ func promptRemove(db *gorm.DB) {
 		fmt.Printf("Prompt failed %v\n", err)
 		return
 	}
-	color.Green("You choosed :%v %v", index, result)
+	db.Delete(&Documentation{}, resDict[index])
+	color.Green("You succesfully removed :%v %v", index, result)
 }
 
 func promptEdit() {
