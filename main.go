@@ -25,10 +25,6 @@ func main() {
 		panic("Failed to conenct to the database.")
 	}
 	db.AutoMigrate(&Documentation{})
-	// db.Create(&Documentation{Title: "test", Command: "ls -l", Definition: "Afficher tous les fichiers dans le dossier courant"})
-	// var d Documentation
-	// db.First(&d, 1)
-	// fmt.Printf("%v %v %v\n", d.Title, d.Command, d.Definition)
 	handleArg(db)
 }
 
